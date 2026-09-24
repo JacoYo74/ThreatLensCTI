@@ -1,0 +1,4 @@
+threat_id,threat_name,threat_type,description,tactic,technique,technique_id,ioc_type,ioc
+THREAT-001,Microsoft 365 Phishing Campaign,Phishing,Threat actors send phishing emails containing links to fake Microsoft 365 login pages,Initial Access,Spearphishing Link,T1566.002,domain,login-microsoft-security.com
+THREAT-002,PowerShell Network Discovery,Post-Compromise Activity,Threat actor uses PowerShell to execute commands and enumerate systems on a compromised network,Discovery,Network Service Scanning,T1046,ip,185.234.72.19
+THREAT-003,Malicious PowerShell Script,Execution,Threat actor executes commands using PowerShell after gaining access to a compromised system,Execution,Command and Scripting Interpreter,T1059.001,sha256,example-malware-hash
