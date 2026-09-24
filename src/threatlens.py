@@ -1,4 +1,6 @@
 import csv
+import ipaddress
+import re
 from collections import Counter
 
 DATA_FILE = "data/threats.csv"
@@ -33,8 +35,30 @@ def display_threats(threats):
         print(f"Tactic: {threat['tactic']}")
         print(f"Technique: {threat['technique']}")
         print(f"Technique ID: {threat['technique_id']}")
+        ioc_valid = validate_ioc(threat["ioc_type"], threat["ioc"])
         print(f"IOC: {threat['ioc']}")
+        print(f"IOC validation: {'VALID' if ioc_valid else 'INVALID'}")
         print("-" * 40)
+
+def validate_ioc(ioc_type, ioc):
+    """Validate an IOC based on its declared type."""
+
+    if ioc_type == "ip":
+        try:
+            ipaddress.ip_address(ioc)
+            return True
+        except ValueError:
+            return False
+
+    if ioc_type == "domain":
+        domain_pattern = r"^(?=.{1,253}$)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$"
+        return bool(re.match(domain_pattern, ioc))
+
+    if ioc_type == "sha256":
+        sha256_pattern = r"^[a-fA-F0-9]{64}$"
+        return bool(re.match(sha256_pattern, ioc))
+
+    return False
 
 
 def display_statistics(threats):
